@@ -1,0 +1,83 @@
+<template>
+  <div>
+    <div class="swiper-container" >
+      <div class="swiper-wrapper">
+        <slot></slot>
+        <!--<div class="swiper-slide"></div>           使用该插件需要手动添加这个swiper-slide类的div-->
+      </div>
+      <!--<div class="swiper-button-prev"></div>左箭头-->
+      <!--<div class="swiper-button-next"></div>右箭头-->
+      <div class="swiper-pagination"></div><!--分页器
+    <!--//图片的圆点-->
+    </div>
+  </div>
+
+</template>
+
+<script>
+
+  import Swiper from 'swiper'
+
+  export default {
+    name: "Swiper",
+    data(){
+      return {
+        swiper:null,
+      }
+    },
+    methods:{
+      initSwiper () {
+        //加载一个定时器，为避免数据未加载完毕而导致轮播图不循环
+        setTimeout(() => {
+          this.swiper = new Swiper('.swiper-container',{
+            loop : true,
+            autoplay: {
+              delay: 2500,
+              disableOnInteraction: false,
+            },
+            autoplayDisableOnInteraction : false,
+            preventClicks: false,
+            speed: 300,
+            observer: true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true,//修改swiper的父元素时，自动初始化swiper
+            // // notNextTick: true, //notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+            // direction: "vertical", //水平方向移动
+            // grabCursor: true, //鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
+            // setWrapperSize: true, //Swiper使用flexbox布局(display: flex)，开启这个设定会在Wrapper上添加等于slides相加的宽或高，在对flexbox布局的支持不是很好的浏览器中可能需要用到。
+            // autoHeight: true, //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化
+            // slidesPerView: 1, //设置slider容器能够同时显示的slides数量(carousel模式)。可以设置为数字（可为小数，小数不可loop），或者 'auto'则自动根据slides的宽度来设定数量。loop模式下如果设置为'auto'还需要设置另外一个参数loopedSlides。
+            // mousewheel: true, //开启鼠标滚轮控制Swiper切换。可设置鼠标选项，默认值false
+            // mousewheelControl: true, //同上
+            // height: window.innerHeight, // 高度设置，占满设备高度
+            // resistanceRatio: 0, //抵抗率。边缘抵抗力的大小比例。值越小抵抗越大越难将slide拖离边缘，0时完全无法拖离。本业务需要
+            pagination:{
+              el:'.swiper-pagination',
+              clickable:true
+            },
+          })
+        },400)
+      },
+    },
+    mounted () {
+      this.initSwiper()
+    }
+  }
+</script>
+
+<style>
+  /*分页器样式*/
+  @import '../../../../node_modules/swiper/css/swiper.css';
+  .swiper-pagination .swiper-pagination-bullet {
+    z-index: 999;
+  }
+
+  .swiper-pagination .swiper-pagination-bullet {
+    background: rgb(255,255,255);
+    opacity: 0.7;
+  }
+
+  .swiper-pagination .swiper-pagination-bullet-active {
+    background-color: rgba(255,48,48,.7);
+    opacity: 1;
+  }
+</style>
