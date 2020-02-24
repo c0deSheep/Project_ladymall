@@ -6,8 +6,9 @@ import store from './store'
 import fastcilck from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 
-
+// 弹出小加载盒子
 import toast from 'components/common/toast'
+
 
 
 //使用封装的toast
